@@ -5,13 +5,21 @@ namespace App\Controller;
 use App\Model\NullWeather;
 use App\Weather\LoaderService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Psr\SimpleCache\InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Response;
 
 class WeatherController extends AbstractController
 {
-    public function index($day, LoaderService $weatherService)
+    /**
+     * @param               $day
+     * @param LoaderService $weatherLoader
+     * @return Response
+     * @throws InvalidArgumentException
+     */
+    public function index($day, LoaderService $weatherLoader): Response
     {
         try {
-            $weather = $weatherService->loadWeatherByDay(new \DateTime($day));
+            $weather = $weatherLoader->loadWeatherByDay(new \DateTime($day));
         } catch (\Exception $exp) {
             $weather = new NullWeather();
         }

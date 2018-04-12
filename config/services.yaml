@@ -1,3 +1,7 @@
+imports:
+    - { resource: services/googleApi.yaml}
+    - { resource: services/weather.yaml}
+
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
@@ -26,5 +30,7 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\GoogleApi\WeatherService:
-        public: true
+    App\Controller\WeatherController:
+        bind:
+            $weatherLoader: '@app.weather.loader_service'
+
