@@ -8,10 +8,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class WeatherController extends AbstractController
 {
-    public function index($day, WeatherService $weatherService)
+    private $weather;
+
+    /**
+     * WeatherController constructor.
+     * @param WeatherService $weatherService
+     */
+    public function __construct(WeatherService $weatherService)
+    {
+        $this->weather = $weatherService;
+    }
+
+    public function index($day)
     {
         try {
-            $weather = $weatherService->getDay(new \DateTime($day));
+            $weather = $this->weather->getDay(new \DateTime($day));
         } catch (\Exception $exp) {
             $weather = new NullWeather();
         }
@@ -21,7 +32,7 @@ class WeatherController extends AbstractController
                 'date'      => $weather->getDate()->format('Y-m-d'),
                 'dayTemp'   => $weather->getDayTemp(),
                 'nightTemp' => $weather->getNightTemp(),
-                'sky'       => $weather->getSky()
+                'sky'       => $weather->getSky(),
             ],
         ]);
     }
