@@ -1,5 +1,6 @@
 imports:
-    - { resource: services/googleApi.yaml}
+    - { resource: services/externalApi/yahooApi.yaml}
+    - { resource: services/externalApi/googleApi.yaml}
     - { resource: services/weather.yaml}
 
 # Put parameters here that don't need to change on each machine where the app is deployed

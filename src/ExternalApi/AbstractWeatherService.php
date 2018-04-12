@@ -1,11 +1,11 @@
 <?php
 
-namespace App\GoogleApi;
+namespace App\ExternalApi;
 
 use App\Model\NullWeather;
 use App\Model\Weather;
 
-class WeatherService
+class AbstractWeatherService
 {
     /**
      * @param \DateTime $day

@@ -2,30 +2,28 @@
 
 namespace App\Weather;
 
-use App\GoogleApi\WeatherService;
 use App\Model\Weather;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 use Psr\SimpleCache\InvalidArgumentException;
 
 class LoaderService
 {
-    /** @var WeatherService */
-    private $googleWeatherService;
-
     /** @var FilesystemCache */
     private $cacheService;
 
+    /** @var ProviderService */
+    private $weatherProvider;
+
     /**
      * LoaderService constructor.
-     * @param WeatherService  $googleWeatherService
+     * @param ProviderService $weatherProvider
      * @param FilesystemCache $cacheService
      */
-    public function __construct(WeatherService $googleWeatherService, FilesystemCache $cacheService)
+    public function __construct(ProviderService $weatherProvider, FilesystemCache $cacheService)
     {
-        $this->googleWeatherService = $googleWeatherService;
+        $this->weatherProvider = $weatherProvider;
         $this->cacheService = $cacheService;
     }
-
 
     /**
      * @param \DateTime $day
@@ -37,11 +35,9 @@ class LoaderService
     {
         $cacheKey = $this->getCacheKey($day);
         if ($this->cacheService->has($cacheKey)) {
-            echo "from cache";
             $weather = $this->cacheService->get($cacheKey);
         } else {
-            echo "save cache";
-            $weather = $this->googleWeatherService->getDay($day);
+            $weather = $this->weatherProvider->getWeatherProvider($day)->getDay($day);
             $this->cacheService->set($cacheKey, $weather);
         }
 
@@ -52,7 +48,7 @@ class LoaderService
      * @param \DateTime $day
      * @return string
      */
-    private function getCacheKey($day): string
+    private function getCacheKey(\DateTime  $day): string
     {
         return $day->format('Y-m-d');
     }

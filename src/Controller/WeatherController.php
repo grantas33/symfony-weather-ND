@@ -30,6 +30,7 @@ class WeatherController extends AbstractController
                 'dayTemp'   => $weather->getDayTemp(),
                 'nightTemp' => $weather->getNightTemp(),
                 'sky'       => $weather->getSky(),
+                'provider'  => $weather->getProvider()
             ],
         ]);
     }

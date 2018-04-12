@@ -4,9 +4,9 @@ namespace App\Model;
 
 class Weather
 {
-    const SUNNY = 1;
-    const CLOUDY = 2;
-    const RAINING = 3;
+    public const SUNNY = 1;
+    public const CLOUDY = 2;
+    public const RAINING = 3;
     /**
      * @var integer
      */
@@ -24,6 +24,9 @@ class Weather
      * @var \DateTime
      */
     protected $date;
+
+    /** @var string */
+    protected $provider;
 
     /**
      * @return int
@@ -87,5 +90,21 @@ class Weather
     public function setDate(\DateTime $date): void
     {
         $this->date = $date;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProvider(): string
+    {
+        return $this->provider;
+    }
+
+    /**
+     * @param string $provider
+     */
+    public function setProvider($provider): void
+    {
+        $this->provider = $provider;
     }
 }

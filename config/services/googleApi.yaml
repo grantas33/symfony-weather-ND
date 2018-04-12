@@ -1,3 +1,0 @@
-services:
-    app.google_api.weather_service:
-        class: App\GoogleApi\WeatherService

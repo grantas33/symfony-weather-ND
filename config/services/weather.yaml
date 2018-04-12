@@ -8,8 +8,14 @@ services:
         class: App\Weather\LoaderService
         public: true
         arguments:
-            - '@app.google_api.weather_service'
+            - '@app.weather.provider_service'
             - '@app.weather.file_system_cache'
+
+    app.weather.provider_service:
+        class: App\Weather\ProviderService
+        arguments:
+            - '@app.external_api.google_api.weather_service'
+            - '@app.external_api.yahoo_api.weather_service'
 
     app.weather.file_system_cache:
         class: Symfony\Component\Cache\Simple\FilesystemCache
