@@ -1,6 +1,6 @@
 parameters:
     weather_cache_namespace: 'weather'
-    weather_cache_default_life_time: '100'
+    weather_cache_default_life_time: '5'
     weather_cache_directory: '%kernel.project_dir%/var/'
 
 services:
@@ -8,8 +8,8 @@ services:
         class: App\Weather\LoaderService
         public: true
         arguments:
-            - '@app.weather.provider_service'
             - '@app.weather.file_system_cache'
+            - '@app.weather.provider_service'
 
     app.weather.provider_service:
         class: App\Weather\ProviderService
@@ -23,3 +23,8 @@ services:
             $namespace: '%weather_cache_namespace%'
             $defaultLifetime: '%weather_cache_default_life_time%'
             $directory: '%weather_cache_directory%'
+
+    app.weather.validation_service:
+        class: App\Weather\ValidationService
+        public: true
+

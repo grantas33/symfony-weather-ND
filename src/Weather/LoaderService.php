@@ -16,14 +16,15 @@ class LoaderService
 
     /**
      * LoaderService constructor.
-     * @param ProviderService $weatherProvider
      * @param FilesystemCache $cacheService
+     * @param ProviderService $weatherProvider
      */
-    public function __construct(ProviderService $weatherProvider, FilesystemCache $cacheService)
+    public function __construct(FilesystemCache $cacheService, ProviderService $weatherProvider)
     {
-        $this->weatherProvider = $weatherProvider;
         $this->cacheService = $cacheService;
+        $this->weatherProvider = $weatherProvider;
     }
+
 
     /**
      * @param \DateTime $day
